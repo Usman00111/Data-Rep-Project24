@@ -18,6 +18,7 @@ const ReadBooks = () => {
             })
             .catch((error) => {
                 console.error("There was an error fetching the book data!", error);
+                setError("failed to load book data");
             });
         }
     }, [id]); //runs when id changes
