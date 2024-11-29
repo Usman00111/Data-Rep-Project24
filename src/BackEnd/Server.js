@@ -37,6 +37,12 @@ app.get('/api/books', async (req, res) => {
     }
 });
 
+//get data by id
+app.get('/api/books/:id', async (req, res) => {
+    const books = await booksModel.findById(req.params.id);
+    res.send(books);
+});
+
 //post route for adding a new book 
 app.post('/api/books', async (req, res) => {
     const {title, author, year, cover } = req.body;
@@ -48,6 +54,20 @@ app.post('/api/books', async (req, res) => {
         console.error("Error adding: ", error);
         res.status(500).json({ message: "Error adding book" });
     }
+});
+
+///api/book/:id: This route fetches a specific book by its ID
+app.get('/api/books/:id', async (req, res) => {
+    let books = await booksModel.findById({ _id: req.params.id }); //The :id parameter represents the movie’s unique identifier.
+    res.send(books); //The server looks up this movie in the database and sends its details back to the client.
+});
+
+//PUT /api/movie/:id: This route updates a specific movie’s information.
+app.put('/api/books/:id', async (req, res) => {
+    //When the user submits the edited data, this route takes the updated details from 
+    //req.body and updates the movie in the database.
+    let books = await booksModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.send(books);
 });
 
 
