@@ -18,7 +18,8 @@ function App() {
       <Routes>
         <Route path='/' element={<BookContent />} />
         <Route path='/add-book' element={<AddBook />} /> 
-        <Route path='/read-books' element={<ReadBooks />} />
+        <Route path="/read-books" element={<ReadBooks />} />
+        <Route path='/read-books/:id' element={<ReadBooks />} />
       </Routes>
       <BookFooter />
     </Router>
