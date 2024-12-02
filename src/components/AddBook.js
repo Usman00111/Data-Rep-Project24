@@ -26,6 +26,7 @@ const AddBook = () => {
         axios.post('http://localhost:4000/api/books', newBook) //send post req to backend including newbook data
             .then((response) => { // handles the successful response from server and loging the confimration message 
                 console.log('Book Added: ', response.data);
+                window.location.reload(); //refreshes the page after adding a book
             })
             .catch((error) => { // func hdandles any error during the req
                 console.error('Error adding book:', error);
