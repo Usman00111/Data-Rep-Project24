@@ -22,14 +22,25 @@ const ReadBooks = () => {
         });
 }, []); // Dependency array is empty to only run once on mount
     
+// reload function re re-fetch book data after deletion 
+const Reload = () => {
+    console.log("Reloading book data...");
+    axios.get("http://localhost:4000/api/books")
+    .then((response) => {
+        setBookData(response.data);
+    })
+    .catch((error) => {
+        console.error("Error reloading book data:", error);
+    });
+
+};
+
 
     return (
         <div>
             {error && <p>{error}</p>}
             {bookData ? (
-                bookData.map((book) => (
-                    <BookItem key={book._id} book={book} />
-            ))
+                <Books books={bookData} ReloadData={Reload} />
         ) : (
             <p>Loading books...</p>
         )}

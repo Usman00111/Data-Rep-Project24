@@ -78,6 +78,12 @@ app.put('/api/books/:id', async (req, res) => {
         }
       });
 
+      app.delete('/api/books/:id', async (req, res) => {
+        console.log('Deleting book with ID:', req.params.id);
+        const book = await bookModel.findByIdAndDelete(req.params.id);
+        res.status(200).send({ message: "Book deleted successfullly", book });
+      });
+
 
 //bellow is book data
 /*const bookData = [
