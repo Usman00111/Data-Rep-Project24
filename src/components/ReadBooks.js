@@ -25,14 +25,10 @@ const ReadBooks = () => {
 
     return (
         <div>
-        {bookData ? (
-            bookData.map((book) => (
-                <div key={book._id}>
-                    <h3>{book.title}</h3>
-                    <p>Author: {book.author}</p>
-                    <p>Year: {book.year}</p>
-                    <img src={book.cover} alt={book.title} style={{ width: "200px" }} />
-                </div>
+            {error && <p>{error}</p>}
+            {bookData ? (
+                bookData.map((book) => (
+                    <BookItem key={book._id} book={book} />
             ))
         ) : (
             <p>Loading books...</p>
@@ -40,7 +36,7 @@ const ReadBooks = () => {
             {/*<h3>Hello from read component</h3>*/}
             {/*<Books books={bookData} /> {/*the books comp recieves bookdata as a prop and will render list of books based on this data */}
         </div>
-    )
+    );
 };
 
 //allows me to import into app.js file 
