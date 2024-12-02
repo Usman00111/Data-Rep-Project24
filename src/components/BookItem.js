@@ -1,6 +1,7 @@
 //imports 
 import { useEffect } from "react";
 import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 //bookitem component for displaying individual books details 
 
@@ -24,10 +25,16 @@ const BookItem = ({ book }) => {
                         <footer>Author: {book.author}</footer>
                         <footer>Published: {book.year}</footer>
                     </blockquote>
+                    <div style={{ marginTop: "10px" }}>
+                        {/* link to naviagte to the edit page */}
+                        <Link to={`/edit/${book._id}`} className="btn btn-primary">
+                            Edit
+                        </Link>
+                    </div>
                 </Card.Body>
             </Card>
         </div>
-    )
+    );
 };
 
 export default BookItem;

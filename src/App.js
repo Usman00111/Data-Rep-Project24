@@ -9,6 +9,7 @@ import BookContent from './components/BookContent';
 import BookFooter from './components/BookFooter';
 import ReadBooks from './components/ReadBooks';
 import AddBook from './components/AddBook';
+import EditBook from './components/EditBook';
 
 //function to call in all the .js files 
 function App() {
@@ -19,7 +20,8 @@ function App() {
         <Route path='/' element={<BookContent />} />
         <Route path='/add-book' element={<AddBook />} /> 
         <Route path="/read-books" element={<ReadBooks />} />
-        <Route path='/read-books/:id' element={<ReadBooks />} />
+        {/* <Route path='/read-books/:id' element={<ReadBooks />} /> */}
+        <Route path='/edit/:id' element={<EditBook />} />
       </Routes>
       <BookFooter />
     </Router>
