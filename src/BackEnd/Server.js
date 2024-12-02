@@ -80,8 +80,14 @@ app.put('/api/books/:id', async (req, res) => {
 
       app.delete('/api/books/:id', async (req, res) => {
         console.log('Deleting book with ID:', req.params.id);
-        const book = await bookModel.findByIdAndDelete(req.params.id);
-        res.status(200).send({ message: "Book deleted successfullly", book });
+        try {
+            const book = await Book.findByIdAndDelete(req.params.id);
+            if (!book) return res.status(404).json({ message: "Book not found" });
+            res.status(200).send({ message: "Book deleted successfullly", book });
+        } catch (error) {
+            console.error("Error deleting book:", error);
+            res.status(500).json({ message: "Error deleting book" });
+        }
       });
 
 
