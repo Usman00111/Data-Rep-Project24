@@ -4,11 +4,11 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-//create express app
+//create express app and defining port for the server
 const app = express();
 const port = 4000; // defining port as per required in assignment 
 
-//middleweare set up 
+//middleweare set up for handling cross-rigin req and parsing incoming data
 app.use(cors()); // allows req from other domains
 app.use(bodyParser.urlencoded({ extended: true})); //parses url encoded data
 app.use(bodyParser.json()); //parses incoming json req
@@ -32,36 +32,37 @@ const bookSchema = new mongoose.Schema({
     cover: String
 });
 
+//creates the book model for schema
 const Book = mongoose.model('Book', bookSchema);
 
 //Get route for fetching books from mongodb
 app.get('/api/books', async (req, res) => {
     try{
-        const books = await Book.find({});
-        res.json(books);
+        const books = await Book.find({}); //fetches all bookk from database
+        res.json(books); //returns in json format
     }catch (error) {
         console.error("Error fetching books:", error);
         res.status(500).json({ message: "Error fetching books "});
     }
 });
 
-//get ansingle book by id
+//get ROUTE to fetch a nsingle book by id
 app.get('/api/books/:id', async (req, res) => {
     try{
-        const book = await Book.findById(req.params.id);
+        const book = await Book.findById(req.params.id); //finds the book by id
         if (!book) return res.status(404).json({ message: "Book not found" });
-        res.send(book);
+        res.send(book); //returns the found book
     }catch (error) {
         console.error("Error fetching book by iD", error);
         res.status(500).json({ message: "Error fetching book" });
     }
 });
 
-//post route for adding a new book 
+//post route for adding a new book to the database
 app.post('/api/books', async (req, res) => {
-    const {title, author, year, cover } = req.body;
+    const {title, author, year, cover } = req.body; //extracts book details from the req body
     try {
-        const newBook = new Book({title, author, year, cover });
+        const newBook = new Book({title, author, year, cover }); //new book object created
         await newBook.save();
         res.status(201).json({ message: 'Book added successfully', book: newBook });
     }catch (error){
@@ -79,17 +80,18 @@ app.put('/api/books/:id', async (req, res) => {
             new: true,
           });
           if (!updatedBook) return res.status(404).json({ message: "Book not found" });
-          res.json(updatedBook);
+          res.json(updatedBook); //returns the updated book details
         } catch (error) {
           console.error("Error updating book:", error);
           res.status(500).json({ message: "Error updating book" });
         }
       });
 
+      //Delete route to delte a book by ID
       app.delete('/api/books/:id', async (req, res) => {
-        console.log('Deleting book with ID:', req.params.id);
+        console.log('Deleting book with ID:', req.params.id); //log the book ID being deleted
         try {
-            const book = await Book.findByIdAndDelete(req.params.id);
+            const book = await Book.findByIdAndDelete(req.params.id); //detele the book by ID
             if (!book) return res.status(404).json({ message: "Book not found" });
             res.status(200).send({ message: "Book deleted successfullly", book });
         } catch (error) {

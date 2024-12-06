@@ -3,19 +3,20 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const EditBook = () => {
-    const {id} = useParams();
+    const {id} = useParams(); //extracts book id from the url
+    //STATE variables for book details and error handling
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
     const [year, setYear] = useState("");
     const [cover, setCover] = useState("");
-    const navigate = useNavigate();
+    const navigate = useNavigate(); //navigate hook to redirect after updating
     const [error, setError] = useState(''); //intializing error state
 
-    //fetch book data when component mounts
+    //fetch book data when component mounts or when ID changes
     useEffect(() => {
         axios.get(`http://localhost:4000/api/books/${id}`)
             .then(response => {
-                setTitle(response.data.title);
+                setTitle(response.data.title); //set title from repsonse data
                 setAuthor(response.data.author);
                 setYear(response.data.year);
                 setCover(response.data.cover);
@@ -24,21 +25,25 @@ const EditBook = () => {
                 console.error("Error fetching book:", error);
                 setError("Failed to fetch book data.");
             });
-    }, [id]);
+    }, [id]); //re-run if the book id changes
 
-    //validate year
+    //validate year numb
     const validateYear = (year) => /^\d+$/.test(year);
 
+    //handle form submission to update book details
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault(); //prevents defualt form submission 
 
+        //check if the year is valid
         if (!validateYear(year)){
             setError("Year must be a number value!");
-            return
+            return; //stop further excution 
         }
-        
-        const updatedBook = { title, author, year, cover };
 
+        //prepares updated book data
+        const updatedBook = { title, author, year, cover }; 
+
+        //making PUT req to update the book on the server
         axios.put(`http://localhost:4000/api/books/${id}`, updatedBook)
             .then(response => {
                 console.log("book updated", response.data);
@@ -47,6 +52,7 @@ const EditBook = () => {
             .catch(error => console.log(error));
     };
 
+    //render form with pre-filled value for editing 
     return (
         <form onSubmit={handleSubmit}>
             <div>
