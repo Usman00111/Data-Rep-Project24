@@ -9,10 +9,20 @@ const AddBook = () => {
     const [author, setAuthor] = useState('');
     const [year, setYear] = useState('');
     const [cover, setCover] = useState('');
+    const [error, setError] = useState('');
+
+    const validateYear = (year) => /^\d+$/.test(year);
+
+
 
     // logs current values of form field to the console and prevents the default form submission 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!validateYear(year)) {
+            setError("Year must be an integer") 
+            return;
+        }
 
         //created a new book object
         const newBook = {
@@ -60,7 +70,7 @@ const AddBook = () => {
                 <div className="form-group">
                     <label>Year: </label>
                     <input
-                        type="text"
+                        type="number" //changed to UI for better UI control as i am now only accepting number as an input
                         className="form-control"
                         value={year}
                         onChange={(e) => setYear(e.target.value)}

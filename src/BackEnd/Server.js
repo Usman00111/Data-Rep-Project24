@@ -20,7 +20,15 @@ mongoose.connect('mongodb+srv://admin:admin@admin1.zr6za.mongodb.net/DB15');
 const bookSchema = new mongoose.Schema({
     title: String,
     author: String,
-    year: String,
+    year: { type : Number,
+            required: true,
+            validate: {
+                validator: Number.isInteger,
+                message: "Year must be Number!"
+            }
+
+    },
+            
     cover: String
 });
 

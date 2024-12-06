@@ -9,7 +9,9 @@ const EditBook = () => {
     const [year, setYear] = useState("");
     const [cover, setCover] = useState("");
     const navigate = useNavigate();
+    const [error, setError] = useState(''); //intializing error state
 
+    //fetch book data when component mounts
     useEffect(() => {
         axios.get(`http://localhost:4000/api/books/${id}`)
             .then(response => {
@@ -18,15 +20,28 @@ const EditBook = () => {
                 setYear(response.data.year);
                 setCover(response.data.cover);
             })
-            .catch(error => console.log(error));
+            .catch((error) => {
+                console.error("Error fetching book:", error);
+                setError("Failed to fetch book data.");
+            });
     }, [id]);
+
+    //validate year
+    const validateYear = (year) => /^\d+$/.test(year);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!validateYear(year)){
+            setError("Year must be a number value!");
+            return
+        }
+        
         const updatedBook = { title, author, year, cover };
+
         axios.put(`http://localhost:4000/api/books/${id}`, updatedBook)
             .then(response => {
-                console.log(response.data);
+                console.log("book updated", response.data);
                 navigate('/read-books'); //redirect to the book list
             })
             .catch(error => console.log(error));
