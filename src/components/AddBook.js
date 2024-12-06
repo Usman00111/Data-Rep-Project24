@@ -2,29 +2,31 @@ import { useState } from "react";
 import axios from "axios";
 
 
-//this is  function for adding book 
+//addbook comp for adding book 
 const AddBook = () => {
-    // this is a usestate Hooks create state variable for each book field and their setters for start they are empty
+    // this is a usestate Hooks to manage the form fields and error state
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [year, setYear] = useState('');
     const [cover, setCover] = useState('');
     const [error, setError] = useState('');
 
+    //validateyear func checks if the year is a runner
     const validateYear = (year) => /^\d+$/.test(year);
 
 
 
-    // logs current values of form field to the console and prevents the default form submission 
+    // handSubmit func is called whne the form is submitted
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault(); //prevent form from reloading the page on submit
 
+        //validate year input
         if (!validateYear(year)) {
             setError("Year must be an integer") 
             return;
         }
 
-        //created a new book object
+        //created a new book object with the form data
         const newBook = {
             title,
             author,
@@ -33,12 +35,12 @@ const AddBook = () => {
         };
 
         //send post requiest to backend to add the book
-        axios.post('http://localhost:4000/api/books', newBook) //send post req to backend including newbook data
-            .then((response) => { // handles the successful response from server and loging the confimration message 
+        axios.post('http://localhost:4000/api/books', newBook) //send post req to backend to add the new book 
+            .then((response) => {
                 console.log('Book Added: ', response.data);
-                window.location.reload(); //refreshes the page after adding a book
+                window.location.reload(); //refreshes the page after adding the updated book
             })
-            .catch((error) => { // func hdandles any error during the req
+            .catch((error) => { 
                 console.error('Error adding book:', error);
             });
     };
@@ -53,7 +55,7 @@ const AddBook = () => {
                         type="text"
                         className="form-control"
                         value={title}
-                        onChange={(e) => setTitle(e.target.value)} // pmchange event handler updates the state with new input value
+                        onChange={(e) => setTitle(e.target.value)} // updates state with title input
                         required
                     />
                 </div>

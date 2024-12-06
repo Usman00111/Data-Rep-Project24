@@ -10,24 +10,25 @@ import e from "cors";
 
 const BookItem = ({ book }) => {
     useEffect(() => {
-        console.log("Book Item:", book);
-    }, [book]); // Logs book details whenever the prop changes
+        console.log("Book Item:", book); // Logs book details whenever the book prop changes
+    }, [book]); 
 
+    // handleDelete func the book when the delete button is clicked 
     const handleDelete = (e) => {
-        e.preventDefault();
-        axios.delete(`http://localhost:4000/api/books/${book._id}`)
+        e.preventDefault(); // prevents the default behavious of the event 
+        axios.delete(`http://localhost:4000/api/books/${book._id}`) // send Delete req to the server
             .then(() => {
-                window.location.reload(); // realod the page to update the book list
+                window.location.reload(); // realods the page to update the book list after deletion 
             })
             .catch((error) => {
-                console.error("Error deleting book:", error);
+                console.error("Error deleting book:", error); // logs any error during deletion 
             });
     };
 
     return (
         <div>
            {/* <h3>Hello from the BookItem Component</h3>*/}
-            <Card>
+            <Card> {/* renders a card for displaying book details */}
                 <Card.Header>{book.title}</Card.Header>
                 <Card.Body>
                     <blockquote className="blockquote mb-0">
