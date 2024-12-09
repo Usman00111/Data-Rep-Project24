@@ -1,10 +1,14 @@
 import { FaFacebook, FaTwitter, FaInstagram  } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Privacy from "./Privacy";
+import Contact from "./Contact";
+import About from "./About";
+
 // this is a footer which i will use further to provide more info and give more web app look for my proj
 const BookFooter = () => {
-    return (
 
-        <footer className="footer">
+    return (
+        <footer className="footer" >
           <div className="footer-content">
             <div className="social-icons"> {/* links ot di */}
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
@@ -19,9 +23,10 @@ const BookFooter = () => {
             </div>
             {/*links to those pages currently just place holders */}
             <div className="footer-links">
-              <Link to="/about" className="footer-link">About</Link>
-              <Link to="/privacy" className="footer-link">Privacy Policy</Link>
-              <Link to="/contact" className="footer-link">Contact</Link>
+              <Link to="./about" >About</Link>
+              <Link to="./Privacy ">Privacy Policy</Link>
+                {<Link to="./Contact ">Contact</Link>}
+              
             </div>
             <div className="footer-bottom">
               <p>© 2024 Your Company</p>
