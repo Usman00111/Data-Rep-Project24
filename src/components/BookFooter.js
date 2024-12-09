@@ -23,9 +23,9 @@ const BookFooter = () => {
             </div>
             {/*links to those pages currently just place holders */}
             <div className="footer-links">
-              <Link to="./about" >About</Link>
-              <Link to="./Privacy ">Privacy Policy</Link>
-                {<Link to="./Contact ">Contact</Link>}
+              <Link to="./about" className="footer-link">About</Link>
+              <Link to="./Privacy " className="footer-link">Privacy Policy</Link>
+                {<Link to="./Contact "className="footer-link">Contact</Link>}
               
             </div>
             <div className="footer-bottom">
